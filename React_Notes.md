@@ -363,27 +363,46 @@ it is just a normal function written by some Facebook developers which have some
 >useState is a React Hook or you can say js function which handles state and returns an array with [variable,function to update variable]
 
 **Why React Is Fast?**  
->It is because of fast DOM manupulation
+>It is because of fast DOM manupulation using Virtual DOM and reconsilation algithermerm 
 
-What is a Microservice?  
-What is Monolith architecture?  
-What is the difference between Monolith and Microservice?  
-Why do we need a useEffect Hook?  
-    useEffect is called after component is rendered  
-What is Optional Chaining?  
-What is Shimmer UI?  
-What is the difference between JS expression and JS statement  
-What is Conditional Rendering, explain with a code example  
-What is CORS?  
-What is async and await?  
-What is the use of `const json = await data.json();`  
-Why CDN is used to store images? (Swiggy Uses it)  
-What are various ways to add images into our App? Explain with code examples  
-What would happen if we do console.log(useState())?  
-How will useEffect behave if we don't add a dependency array ?  
-What is SPA(Single Page Application)?  
-What is difference between Client Side Routing and Server Side Routing?  
-We can make componentDidMount as async but we cannot make callBack function in useEffect async why?    
+**What is a Microservice?**  
+
+**What is Monolith architecture?**  
+
+**What is the difference between Monolith and Microservice?**  
+
+**Why do we need a useEffect Hook?**   
+>    useEffect is called after component is rendered 
+ 
+**What is Optional Chaining?**  
+
+**What is Shimmer UI?**  
+
+**What is the difference between JS expression and JS statement** 
+
+**What is Conditional Rendering, explain with a code example**  
+
+**What is CORS?** 
+
+**What is async and await?**  
+ 
+**Why CDN is used to store images? (Swiggy Uses it)**  
+  
+**What would happen if we do console.log(useState())?** 
+
+**How will useEffect behave if we don't add a dependency array ?** 
+
+**What is SPA(Single Page Application)?** 
+
+**What is difference between Client Side Routing and Server Side Routing?**  
+
+**We can make componentDidMount as async but we cannot make callBack function in useEffect async why?**    
+
+>**useEffect** is designed like it thinks its callBack function will return a function to clean up or undefined. if we place async for useEffect callBack which returns a promise.This causes unexpected behaviour because the expected use case of useEffect is different.  
+On the other hand **componentDidMount**() is a function  Called after the component has rendered and the DOM is ready. You can use async functions within componentDidMount because it doesn’t have the same requirement for a cleanup function.  
+**ComponentDidMount**: Inherently synchronous. You can call an async function within it to perform side effects without needing to return a cleanup function  
+[For more refer This blog explains neatly](https://dev.to/niketanwadaskar/why-cant-we-use-async-with-useeffect-but-can-with-componentdidmount-45be)  
+   
 
 ### SOME_IMPORTANT_KEYWORD
 > React-key Reconciliation [Reference Link](https://legacy.reactjs.org/docs/reconciliation.html)    
