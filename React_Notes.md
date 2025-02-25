@@ -103,6 +103,7 @@ render() method is mandatory method in class component
 render returns some JSX
 
 ### Basic example
+```javascript
 class BasicClass extends React.Component{
     constructor(props){
         super(props)
@@ -117,6 +118,7 @@ class BasicClass extends React.Component{
         )
     }
 }
+```
 ### Code example of React element
 This is Element 
 
