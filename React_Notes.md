@@ -273,13 +273,19 @@ class Child extends React.Component{
         this.state = {}
         console.log('first called and intilization happen')
     }
-    componentDidMount(){
+    componentDidMount(prevProps,prevState){
+        if(this.state.someting !=== prevState.something){
+            // Do someting this is equvalent to useEffect with dependency see below functional component example
+        }
+        if(this.state.someting2 !=== prevState.something2){
+            // Do someting
+        }
         console.log('after first render it calls')
     }
     componentDidUpdate(){
         console.log('after after every re-render')
     }
-    componentWillUpdate(){
+    componentWillUnmount(){
         console.log('called before component is leaving')
     }
     render(){
@@ -314,6 +320,10 @@ const MyComponent = ()=>{
     useEffect(()=>{
         // This is equal to compare state with prevState kind of thing in componentDidUpdate
     },[something])
+
+       useEffect(()=>{
+        // This is equal to compare state with prevState kind of thing in componentDidUpdate
+    },[something2])
 
     return(
         <div>
