@@ -646,12 +646,53 @@ console.log(adventurer.someNonExistentMethod?.());
 > Server-side routing, on the other hand, involves the server handling URL requests and sending back the relevant HTML content for each page. When a user navigates to a new page, the browser sends a request to the server, which responds with the appropriate HTML, leading to a full page refresh.  
 > [Blog for reference](https://medium.com/@wilbo/server-side-vs-client-side-routing-71d710e9227f)
 
+
 **We can make componentDidMount as async but we cannot make callBack function in useEffect async why?**
 
 > **useEffect** is designed like it thinks its callBack function will return a function to clean up or undefined. if we place async for useEffect callBack which returns a promise.This causes unexpected behaviour because the expected use case of useEffect is different.  
 > On the other hand **componentDidMount**() is a function Called after the component has rendered and the DOM is ready. You can use async functions within componentDidMount because it doesn’t have the same requirement for a cleanup function.  
 > **ComponentDidMount**: Inherently synchronous. You can call an async function within it to perform side effects without needing to return a cleanup function  
-> [For more refer This blog explains neatly](https://dev.to/niketanwadaskar/why-cant-we-use-async-with-useeffect-but-can-with-componentdidmount-45be) > **Why we place , at last record in JSON throws error ?** > **Why type module in js ?** > **Why reportWebVitals when we create react app** > **What is lru cache ?**
+> [For more refer This blog explains neatly](https://dev.to/niketanwadaskar/why-cant-we-use-async-with-useeffect-but-can-with-componentdidmount-45be)
+
+**Why when we place "," at last record in JSON throws error?**
+
+> JSON has a strict rule: there should never be a comma after the last item in an object or array. It expects that after the last item, there is nothing left to separate.
+
+**Why type module in js ?**
+
+```
+When you use the "type": "module" option in your package.json file (or in your HTML <script> tag), you tell the browser or Node.js that your JavaScript files are modules and you want to use features like:
+
+import: You can bring in code from another file to use in your current file.
+
+export: You can send some code (functions, variables, etc.) from one file so other files can use it.
+
+Without telling the system, "Hey, this is a module," it wouldn't know you’re trying to use the modern import/export features. So, "type": "module" is a way to tell JavaScript that you are using modules and want to organize your code into different files.
+```
+
+**Why reportWebVitals comes when we create react app**
+
+> [Medium Article](https://medium.com/@larrydev/understanding-web-vitals-in-react-a-guide-to-improving-user-experience-and-performance-89f7c898b504)
+
+**What is LRU cache ?**
+
+```
+Imagine you have a toy box with a limited amount of space, and you have a lot of toys that you like to play with. You can only keep a few toys in the box at a time because it’s small.
+
+What happens if the box gets full?
+When you get a new toy, you need to make space in the box. So, you give away or remove the oldest toy you haven’t played with in a while to make room for the new one. This way, the toys in your box are always the ones you play with the most!
+
+That’s exactly how an LRU (Least Recently Used) Cache works!
+Cache is like a special toy box for storing things (like toys or information) that you use a lot.
+
+LRU means "Least Recently Used," which is a fancy way of saying, the oldest toy (or information) gets removed first when the box is full.
+
+So, when you run out of space in your toy box (or cache), the least recently used toy (or the one you haven’t played with in a while) is the first to go, making room for the new one you want to keep.
+
+In short:
+An LRU Cache is a smart toy box that remembers which toys you played with last and makes sure it only keeps the toys you play with the most. If you don’t play with a toy for a long time, it will be the first one to go!
+
+```
 
 ### SOME_IMPORTANT_KEYWORD
 
