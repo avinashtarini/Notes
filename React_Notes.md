@@ -646,7 +646,7 @@ console.log(adventurer.someNonExistentMethod?.());
 > Server-side routing, on the other hand, involves the server handling URL requests and sending back the relevant HTML content for each page. When a user navigates to a new page, the browser sends a request to the server, which responds with the appropriate HTML, leading to a full page refresh.  
 > [Blog for reference](https://medium.com/@wilbo/server-side-vs-client-side-routing-71d710e9227f)
 
-> **We can make componentDidMount as async but we cannot make callBack function in useEffect async why?**
+**We can make componentDidMount as async but we cannot make callBack function in useEffect async why?**
 
 > **useEffect** is designed like it thinks its callBack function will return a function to clean up or undefined. if we place async for useEffect callBack which returns a promise.This causes unexpected behaviour because the expected use case of useEffect is different.  
 > On the other hand **componentDidMount**() is a function Called after the component has rendered and the DOM is ready. You can use async functions within componentDidMount because it doesn’t have the same requirement for a cleanup function.  
