@@ -354,6 +354,185 @@ if you do-not have unique id then only use index as key but is not recommended.
 ## HOOKS 
 it is just a normal function written by some Facebook developers which have some certain job to do 
 
+
+## Lazy loading
+
+While bundeling react as a single page application bundles all code into single file which increases bundle size .
+
+### Corns of having single bundle file:
+
+Take paytm as example there has many components lets say features
+in end user perspective user journey in app, user might not go to every feature the odds are very less
+lets say some user wants to book movies then he only checks movies component then he does not need files related to train / flight bookings and vice vera.
+second is if we have multiple components and are image rich then as images are large and this adds weight to bundle
+
+In this cases we can use some concept with different names as below
+
+> > Lazy Loading, Chunking , Code Splitting , Dynamic Imports , Dynamic Bundling , On Demand Loading.
+
+Here what happens is only when requested like clicking on particular component by end user then realted files are bundled . Which improves speed.
+Below is the syntax
+
+Syntax
+
+```javascript
+const Component = lazy(()=>import("../SomeComponent"))
+ <Suspense
+    fallback={()=><h1>loading</h1>}
+ >
+    <Component />
+</Suspense>
+```
+
+Why we used suspense is, First thing react tries is while clicking on component it tries to render the component like mounting. but as we are dynamically importing downloading code from server takes some time, in that time react throws error because for reacts view there is no file it suspends the operation. so react provided something called suspense literally suspense )= . it takes a fallBack which shows in the meantime of downloading content from server.
+
+### DATA
+
+> `UI layer(every thing you see on ui) / Data Layer (Rest all happens) => Front end page (Single Page Application)`
+> These two layers works indepandant and are in sync
+
+## Prop Drilling
+
+> Data is passing as chain from parent to child and so on...  
+> for 2 or 3 levels it is ok but more levels it is waste and not good
+> one change in prop of parent will re render all cards even they are not using that prop just passing to chid3 like that.
+
+```
+ Parent data
+    Child 1 prop={data}
+        Child 2 prop={data}
+            Child 3 prop={data}
+                Child 3 prop={data}
+```
+
+## Context
+
+```javascript
+Const ContextCreated = createContext({
+   user:{}
+})
+
+ContextCreated.displayName = "Some Name"
+```
+
+Helps in debugging if we have multiple context this displayName helps us in dev tools.
+
+We can override the default value of the context using Provider value prop
+
+```javascript
+const [user,setUser]=>useState({
+    ....
+})
+
+<ContextCreated.Provider
+    value={{
+        user,
+        setUser
+    }} // Dynamically send will change default value
+>
+    <App>
+</ContextCreated.Provider>
+```
+
+### In Functional component
+
+```javascript
+const data = useContext(ContextCreated);
+```
+
+> This data will have user and setUser all things passed to value prop
+
+### In Class Component
+
+```javascript
+<ContextCreated.Consumer>{(contextData)=> return JSX}</ContextCreated.Consumer>
+```
+
+## Redux and Dev tools
+
+Redux-Toolkit is updated version of redux
+Redux-toolkit is core like having store
+
+react-redux is bridge btw react app and store so we need 2 packages
+
+> React Dev Tools component and profile tab play with it
+
+> [All About Bundler Blog](https://dev.to/sayanide/the-what-why-and-how-of-javascript-bundlers-4po9#:~:text=A%20JavaScript%20bundler%20is%20a%20tool%20that%20helps,minimize%20HTTP%20requests%20and%20improve%20page%20load%20performance.)
+
+## TESTING
+
+### Types of testing
+
+- Manual Testing
+- Automation Testing
+- End 2 End Testing -(Using Selinum , cypress) it just automates user flow in Application
+
+- Unit Testing - Testing a small unit or function
+- Integration Testing - Testing collection of units or flow of collection of components
+
+### **Jest is javascript testing framework**
+
+> There is something called testing library which includes react testing library and lot of testing frameworks
+
+React testing library uses jest behind the sene so we need to install jest also because testing library is dependent on jest.
+
+```
+1. Install React Testing library
+2. Install Jest
+3. npx jest --init => to configure jest in our application it will create jest.config.js file
+4. We need babel with jest because jest will not understand ES6 and imports and babel help in this case.
+   Need to configure babel there are 2 options
+   => .babelrc or babel.config.js, But .babelrc requires JSON but babel.config is Javascript
+```
+
+### **Simple JS testing**
+
+```javascript
+const product = (a,b)=> a\*b // JS File
+
+test("Telling what this text case will be good here",()=>{
+expect(product(2\*3)).toBe(6)
+})
+```
+
+### React Testing
+
+Jest will not understand JSX, So we will need another configuration in our pre babel configuration file so jest will understand.  
+Here we are running our code in JS Dom , we have 2 options JS Dom and node environments.
+
+Js Dom we are using in jest, it will not understand .png .jpeg, Because it will try to read it as Javascript only.  
+Whenever Js Dom or Jest does not understand then we will make a mock file and return a string.
+
+In jest config file there is something called module name mapper in that file we config like that if any .png .jpeg like files comes then use my mock file
+
+```
+moduleNameMapper:{
+"\\.(jpg|png|svg|jpeg)$":"my mock file path"
+}
+```
+
+Jest does not understand fetch or axios so we have to mock our api call
+Jest is giving something called dummy function ,Here we are mocking API with fetch
+as we know fetch will return a Promise with readable data and we will convert that data to json which will be another promise . This we are stimulating this in our fake api
+
+#### Mock API Example
+
+```javascript
+const data = await fetch("someurl");
+const res = await data.json();
+global.fetch = jest.fn(() => {
+  return Promise.resolve({
+    json: () => Promise.resolve(OUR_DUMMY_DATA),
+  });
+});
+```
+
+> There is something **waitFor()** a function so it waits till something load
+
+We can fire all events by mocking events for the purpose of testing
+we use testIds to access elements in our JSX
+====  
+
 ## Some Questions
 
 **Why need state ?**   
@@ -401,8 +580,11 @@ it is just a normal function written by some Facebook developers which have some
 >**useEffect** is designed like it thinks its callBack function will return a function to clean up or undefined. if we place async for useEffect callBack which returns a promise.This causes unexpected behaviour because the expected use case of useEffect is different.  
 On the other hand **componentDidMount**() is a function  Called after the component has rendered and the DOM is ready. You can use async functions within componentDidMount because it doesn’t have the same requirement for a cleanup function.  
 **ComponentDidMount**: Inherently synchronous. You can call an async function within it to perform side effects without needing to return a cleanup function  
-[For more refer This blog explains neatly](https://dev.to/niketanwadaskar/why-cant-we-use-async-with-useeffect-but-can-with-componentdidmount-45be)  
-   
+[For more refer This blog explains neatly](https://dev.to/niketanwadaskar/why-cant-we-use-async-with-useeffect-but-can-with-componentdidmount-45be)
+**Why we place , at last record in JSON throws error ?**
+**Why type module in js ?**
+**Why reportWebVitals when we create react app**
+**What is lru cache ?**
 
 ### SOME_IMPORTANT_KEYWORD
 > React-key Reconciliation [Reference Link](https://legacy.reactjs.org/docs/reconciliation.html)    
